@@ -1,30 +1,21 @@
 #include <stdio.h>
 
+#define NB_VALEURS 3
+
 int main(void) 
 {
-    double valeurs [2000]=(0.0);
-    int nb_valeurs = 0;
-    double montant;
-
-    do
-    {
-       printf("montant de la valeur : "); 
-       scanf("%f", & montant); //attend la saisie d'un nombre à virgule et le met dans montant
-       valeurs[ nb_valeurs ] = montant;
-       nb_valeurs ++; 
-       
-        /* code */
-    } while (montant >= 0);
-    nb_valeurs--;//on ignore la derniere saisie 
-
-    //calcul du CA
-    double ca = 0.0;
+   
+    int valeurs[NB_VALEURS] = { 8, 4, 12}; 
+    int i = 0; 
     
-    for (int i = 0; i < nb_valeurs ; i ++)
+    while (i < NB_VALEURS)
     {
-        ca += valeurs[i];
+        printf("valeurs[%d] = %d\n", i, valeurs[i]);
+        i++;
     }
-    printf("Le CA est de : %f\n", ca);
+   
+//5) ligne finale
+printf ("+-------------------+\n");
 
     return 0; 
  
