@@ -1,55 +1,60 @@
 #include <stdio.h>
 
 #define NB_VALEURS 3
-#define MAX_LIGNES 15
+#define MAX_LONGUEUR 50
 
-
-//ajout de la fonction afficher_ligne_histov
-void afficher_ligne_histov(int valeurs[], int taille, double y) 
+int main(void)
 {
-    
-    printf("|");
-    for (int j= 0; j < taille; j++) 
+    int valeurs[NB_VALEURS] = { 8, 4, 12 };
+    int i, j, k;
+
+    // 1. Recherche du maximum pour l'échelle (Étape 2)
+    int maximum = valeurs[0];
+    for (i = 1; i < NB_VALEURS; i++)
     {
-       if (valeurs [j] >= y) 
-       {
-            printf("xxx");
+        if (valeurs[i] > maximum)
+        {
+            maximum = valeurs[i];
+        }
     }
-    else
+
+    // 2. Affichage de la graduation supérieure (Étape 4)
+    printf("Echelle (0 a %d):\n", MAX_LONGUEUR);
+    printf("  ");
+    for (i = 0; i <= MAX_LONGUEUR; i += 5)
     {
-        printf("   ");
-    }
+        printf("+");
+        // Espace entre les repères (+ tous les 5 caractères)
+        for (j = 0; j < 4 && (i + j) < MAX_LONGUEUR; j++)
+        {
+            printf("-");
+        }
     }
     printf("\n");
-}
 
-int main(void) 
-{
-    int valeurs[NB_VALEURS] = { 8, 4, 12};
-    
-    //Recherche du maximum du tableau/changement du i par k pour éviter la confusion avec l'autre boucle
-    int max = valeurs[0];
-    for (int k = 1; k < NB_VALEURS; k++)
+    // 3. Affichage des barres horizontales avec lignes de suivi et valeurs
+    for (i = 0; i < NB_VALEURS; i++)
     {
-        if (valeurs[k] > max)
+        // Calcul de la longueur proportionnelle de la barre par rapport à l'échelle
+        int nb_croix = (valeurs[i] * MAX_LONGUEUR) / maximum;
+
+        printf("  "); // Petit décalage pour l'alignement
+
+        // Affichage des X (la barre)
+        for (k = 0; k < nb_croix; k++)
         {
-            max = valeurs[k];
+            printf("X");
         }
-}
-//Boucle pour afficher chaque ligne de l'histogramme vertical
-    for (int i = 0; i < MAX_LIGNES; i++) 
-    {
-       
-       //calcul de y pour la ligne i : y = maximum - (i * (maximum / MAX_LIGNES))
-       double y = max - (i * ((double)max / MAX_LIGNES));
 
-       //appel de la fonction pour dessiner y
-       afficher_ligne_histov(valeurs, NB_VALEURS, y);
+        // Affichage des points de suivi (.) jusqu'à MAX_LONGUEUR (Étape 4)
+        for (k = nb_croix; k < MAX_LONGUEUR; k++)
+        {
+            printf(".");
+        }
+
+        // Affichage de la valeur exacte à la fin
+        printf(" %d\n", valeurs[i]);
     }
-       
-//ligne finale
-printf("+------------------------------------+\n");
 
-    return 0; 
- 
-}   
+    return 0;
+}
